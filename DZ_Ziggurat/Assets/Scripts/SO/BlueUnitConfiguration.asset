@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 568820c17be1a4fff81dfac6611aee44, type: 3}
+  m_Name: BlueUnitConfiguration
+  m_EditorClassIdentifier: 
+  _unitType: 0
+  _maxHealth: 10
+  _moveSpeed: 11.48
+  _fastAttackDamage: 1.5
+  _slowAttackDamage: 2.5
+  _chanceDoubleDamage: 35
+  _chanceMissAttack: 33
+  _frequencyFastAttack: 50
+  _mass: 58.1

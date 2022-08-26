@@ -1263,6 +1263,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1789,6 +1790,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1813,6 +1815,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &7971482898358105656
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1942,10 +1945,11 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 918636558f062a348b7728a9813e06fa, type: 2}
+  - {fileID: 2100000, guid: 92b7761d56e3bc54a9d835c7b39690de, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1966,6 +1970,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &7973146960558157922
 GameObject:
   m_ObjectHideFlags: 0
@@ -2223,8 +2228,9 @@ GameObject:
   - component: {fileID: 7971482898358105655}
   - component: {fileID: 7971482898358105654}
   - component: {fileID: 7971482898358105659}
+  - component: {fileID: 4019011840091722216}
   m_Layer: 0
-  m_Name: RPGHeroPolyart
+  m_Name: RedUnit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2309,6 +2315,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: 8067314749199957198}
   _collider: {fileID: 7971482898358105656}
+--- !u!114 &4019011840091722216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7973307358779964746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c062681963c36453cb5992ee026779f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitType: 1
 --- !u!1 &7973312293858233878
 GameObject:
   m_ObjectHideFlags: 0
