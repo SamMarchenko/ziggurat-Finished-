@@ -10,6 +10,6 @@ namespace Ziggurat
 		[SerializeField]
 		private AnimationKeyDictionary _keys;
 
-		public IReadOnlyDictionary<AnimationType, string> GetDictionary => _keys.Clone();
+		public IReadOnlyDictionary<EAnimationType, string> GetDictionary => _keys.Clone();
 	}
 }

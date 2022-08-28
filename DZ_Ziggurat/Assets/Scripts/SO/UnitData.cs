@@ -2,7 +2,7 @@ using UnityEngine;
 using Ziggurat;
 
 [CreateAssetMenu(fileName = "BaseUnitConfiguration", menuName = "UnitsConfiguration", order = 3)]
-public class UnitConfiguration : ScriptableObject
+public class UnitData : ScriptableObject
 {
     [SerializeField] private EUnitType _unitType;
     public EUnitType UnitType => _unitType;

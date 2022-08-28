@@ -8,8 +8,14 @@ public class UnitsFactory : MonoBehaviour
 {
     [SerializeField] private UnitBehaviour[] _units;
     [SerializeField] private SpawnPositions[] _spawnPositions;
-    [SerializeField] private UnitConfiguration[] _unitsData;
+    public SpawnPositions[] SpawnPositions => _spawnPositions;
+    private List<UnitData> _unitsData = new List<UnitData>();
     [SerializeField] private GameObject _defaultTarget;
+
+    public void SetUnitConfiguration(UnitData unitdata)
+    {
+        _unitsData.Add(unitdata);
+    }
 
     public void CreateUnit()
     {
@@ -19,7 +25,7 @@ public class UnitsFactory : MonoBehaviour
                 spawnPosition.transform.position + new Vector3(0, 8, 0),
                 Quaternion.identity);
             var unitData = GetUnitData(unit.UnitType);
-            unit.Init(unitData.GetMoveSpeed, _defaultTarget, unitData.GetMass);
+            unit.Init(unitData, _defaultTarget);
             unit.transform.LookAt(Vector3.zero);
         }
     }
@@ -35,7 +41,7 @@ public class UnitsFactory : MonoBehaviour
         return null;
     }
 
-    private UnitConfiguration GetUnitData(EUnitType unitType)
+    private UnitData GetUnitData(EUnitType unitType)
     {
         foreach (var unitData in _unitsData)
         {

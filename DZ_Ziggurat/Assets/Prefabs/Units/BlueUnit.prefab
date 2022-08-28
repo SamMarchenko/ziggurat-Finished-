@@ -1569,6 +1569,8 @@ MonoBehaviour:
   _enemiesInRadius: []
   _target: {fileID: 0}
   _hasEnemyTarget: 0
+  _canAttack: 0
+  _currentState: 0
 --- !u!135 &7665483029690575982
 SphereCollider:
   m_ObjectHideFlags: 0

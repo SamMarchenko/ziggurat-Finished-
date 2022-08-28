@@ -17,7 +17,7 @@ MonoBehaviour:
   _moveSpeed: 11.48
   _fastAttackDamage: 1.5
   _slowAttackDamage: 2.5
-  _chanceDoubleDamage: 35
+  _chanceDoubleDamage: 32
   _chanceMissAttack: 33
   _frequencyFastAttack: 50
   _mass: 58.1
