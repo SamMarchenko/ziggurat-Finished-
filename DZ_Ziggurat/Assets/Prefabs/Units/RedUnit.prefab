@@ -1746,6 +1746,7 @@ GameObject:
   - component: {fileID: 7986788596145947126}
   - component: {fileID: 7995339674218275668}
   - component: {fileID: 7971482898358105656}
+  - component: {fileID: 1722298133089876750}
   m_Layer: 0
   m_Name: PolyartSword
   m_TagString: Untagged
@@ -1829,6 +1830,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.2, y: 1.08, z: 0.06}
   m_Center: {x: 0, y: -0.7, z: 0}
+--- !u!114 &1722298133089876750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7973101130614883438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8021b28f0f184b96b087e61cf0030ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitEnvironment: {fileID: 7971482898358105659}
+  _unitBehaviours: []
 --- !u!1 &7973102733352975706
 GameObject:
   m_ObjectHideFlags: 0
@@ -2331,7 +2346,10 @@ MonoBehaviour:
   _unitType: 1
   _enemiesInRadius: []
   _target: {fileID: 0}
+  _damageChecker: {fileID: 1722298133089876750}
   _hasEnemyTarget: 0
+  _canAttack: 0
+  _currentState: 0
 --- !u!135 &-7734474150452942334
 SphereCollider:
   m_ObjectHideFlags: 0

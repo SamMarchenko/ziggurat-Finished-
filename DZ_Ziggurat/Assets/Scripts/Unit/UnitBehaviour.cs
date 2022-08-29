@@ -21,9 +21,11 @@ public class UnitBehaviour : MonoBehaviour
     private float _slowAttackDamage;
     private float _health;
     private UnitData _unitData;
+    [SerializeField] private DamageChecker _damageChecker;
     [SerializeField] private bool _hasEnemyTarget;
     [SerializeField] private bool _canAttack;
     [SerializeField] private EAnimationType _currentState;
+    [SerializeField] private bool isFinishAttack = true;
 
     public Action<UnitBehaviour> Dead;
 
@@ -40,6 +42,25 @@ public class UnitBehaviour : MonoBehaviour
         _fastAttackDamage = _unitData.GetFastAttackDamage;
         _slowAttackDamage = _unitData.GetSlowAttackDamage;
         _health = _unitData.GetMaxHealth;
+        _damageChecker.ContactedUnits += ContactedUnits;
+        _unitEnvironment.ColliderIsOff += ColliderIsOff;
+    }
+
+    private void ColliderIsOff()
+    {
+        isFinishAttack = true;
+    }
+
+    private void ContactedUnits(List<UnitBehaviour> contactedUnits)
+    {
+        foreach (var contactedUnit in contactedUnits)
+        {
+            if (contactedUnit == _target)
+            {
+                OnAttack();
+                break;
+            }
+        }
     }
 
     private void Update()
@@ -73,6 +94,8 @@ public class UnitBehaviour : MonoBehaviour
 
     private void OnAttack()
     {
+        if (!isFinishAttack) return;
+        
         var unitBehaviour = _target.GetComponent<UnitBehaviour>();
         if (_currentState == EAnimationType.FastAttack)
         {
@@ -85,6 +108,8 @@ public class UnitBehaviour : MonoBehaviour
             _unitEnvironment.StartAnimation("Strong");
         }
 
+        isFinishAttack = false;
+        
         if (_target != null) return;
         FindClosestEnemy();
         _currentState = EAnimationType.Move;
@@ -200,7 +225,7 @@ public class UnitBehaviour : MonoBehaviour
 
     private void OnDead(UnitBehaviour enemyBehaviour)
     {
-        enemyBehaviour.Dead -= OnDead;
+        //enemyBehaviour.Dead -= OnDead;
         _target = null;
         _currentState = EAnimationType.Move;
     }

@@ -12,6 +12,8 @@ namespace Ziggurat
 		private Animator _animator;
 		[SerializeField]
 		private Collider _collider;
+		
+		public Action ColliderIsOff;
 
 
 		/// <summary>
@@ -41,7 +43,15 @@ namespace Ziggurat
 		//Вызывается внутри анимаций для переключения атакующего коллайдера
 		private void AnimationEventCollider_UnityEditor(int isActivity)
 		{
-			_collider.enabled = isActivity != 0;
+			if (isActivity != 0)
+			{
+				_collider.enabled = true;
+			}
+			else
+			{
+				_collider.enabled = false;
+				ColliderIsOff?.Invoke();
+			}
 		}
 
 		//Вызывается внутри анимаций для оповещения об окончании анимации
