@@ -10,18 +10,34 @@ public class UnitsFactory : MonoBehaviour
     [SerializeField] private SpawnPositions[] _spawnPositions;
     [SerializeField] private UnitConfiguration[] _unitsData;
     [SerializeField] private GameObject _defaultTarget;
+    
 
     public void CreateUnit()
     {
         foreach (var spawnPosition in _spawnPositions)
         {
             var unit = Instantiate(GetUnitForCreation(spawnPosition.UnitType),
-                spawnPosition.transform.position + new Vector3(0, 8, 0),
-                Quaternion.identity);
-            var unitData = GetUnitData(unit.UnitType);
-            unit.Init(unitData.GetMoveSpeed, _defaultTarget, unitData.GetMass);
+                spawnPosition.transform.position + new Vector3(0, 8, 0), Quaternion.identity);
+            var unitConfiguration = GetUnitConfig(unit.UnitType);
+            unit.Init(_defaultTarget, GetUnitData(unitConfiguration));
             unit.transform.LookAt(Vector3.zero);
         }
+    }
+
+    private UnitData GetUnitData(UnitConfiguration config)
+    {
+        UnitData unitData = new UnitData();
+        
+        unitData.Health = config.GetMaxHealth;
+        unitData.UnitType = config.UnitType;
+        unitData.MoveSpeed = config.GetMoveSpeed;
+        unitData.FastAttackDamage = config.GetFastAttackDamage;
+        unitData.SlowAttackDamage = config.GetSlowAttackDamage;
+        unitData.ChanceDoubleDamage = config.GetChanceDoubleDamage;
+        unitData.ChanceMissAttack = config.GetChanceMissAttack;
+        unitData.FrequencyFastAttack = config.GetFrequencyFastAttack;
+        unitData.Mass = config.GetMass;
+        return unitData;
     }
 
     private UnitBehaviour GetUnitForCreation(EUnitType spawnUnitType)
@@ -35,7 +51,7 @@ public class UnitsFactory : MonoBehaviour
         return null;
     }
 
-    private UnitConfiguration GetUnitData(EUnitType unitType)
+    private UnitConfiguration GetUnitConfig(EUnitType unitType)
     {
         foreach (var unitData in _unitsData)
         {
