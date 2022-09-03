@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RedUnitConfiguration
   m_EditorClassIdentifier: 
   _unitType: 1
-  _maxHealth: 7
+  _maxHealth: 15
   _moveSpeed: 15
   _fastAttackDamage: 1
   _slowAttackDamage: 3

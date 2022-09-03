@@ -12,6 +12,7 @@ public class UnitBehaviour : MonoBehaviour
     [SerializeField] private GameObject _defaultTarget;
     [SerializeField, Space] private TargetFinder _targetFinder;
     [SerializeField] private SphereCollider _sphere;
+    [SerializeField, Space] private SwordContact _swordContact;
     
     private UnitEnvironment _unitEnvironment;
     private Rigidbody _rigidbody;
@@ -30,8 +31,10 @@ public class UnitBehaviour : MonoBehaviour
         _unitState = EStateType.Move;
         _targetFinder.SetUnitType(unitData.UnitType);
         _sphere.enabled = true;
+        _swordContact.SetUnitType(unitData.UnitType);
+        _swordContact.SwordTargetContact += SetTargetDamage;
     }
-
+    
     private void Update()
     {
         CheckUnitState();
@@ -44,6 +47,7 @@ public class UnitBehaviour : MonoBehaviour
             case EStateType.Move:
                 OnSeek();
                 SetNearestTarget();
+                CheckTargetDistance();
                 break;
             case EStateType.FastAttack:
             case EStateType.StrongAttack:
@@ -53,6 +57,16 @@ public class UnitBehaviour : MonoBehaviour
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
+        }
+    }
+
+    private void CheckTargetDistance()
+    {
+        if (_target == null) return;
+        var distance = Vector3.Distance(transform.position, _target.transform.position);
+        if (distance <= 5f)
+        {
+            RandomAttackState();
         }
     }
 
@@ -99,25 +113,32 @@ public class UnitBehaviour : MonoBehaviour
     
     private void OnAttack(UnitBehaviour target)
     {
-        //if (!isFinishAttack) return;
-        
-        var unitBehaviour = target.GetComponent<UnitBehaviour>();
         if (_unitState == EStateType.FastAttack)
         {
-            unitBehaviour.ApplyDamage(_unitData.FastAttackDamage);
+            target.ApplyDamage(_unitData.FastAttackDamage);
             _unitEnvironment.StartAnimation("Fast");
         }
         else
         {
-            unitBehaviour.ApplyDamage(_unitData.SlowAttackDamage);
+            target.ApplyDamage(_unitData.SlowAttackDamage);
             _unitEnvironment.StartAnimation("Strong");
         }
-
-        //isFinishAttack = false;
-        _unitState = EStateType.Move;
-        //if (target != null) return;
     }
-    
+    private void SetTargetDamage(UnitBehaviour unit)
+    {
+        if (unit != _target) return;
+        switch (_unitState)
+        {
+            case EStateType.FastAttack:
+                unit.ApplyDamage(_unitData.FastAttackDamage);
+                break;
+            case EStateType.StrongAttack:
+                unit.ApplyDamage(_unitData.SlowAttackDamage);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    }
     public void ApplyDamage(float damage)
     {
         if (_unitData.Health - damage > 0)
@@ -136,13 +157,6 @@ public class UnitBehaviour : MonoBehaviour
     private void RandomAttackState()
     {
         var random = Random.Range(0.0f, 1.0f);
-        if (random < _unitData.FrequencyFastAttack)
-        {
-            _unitState = EStateType.FastAttack;
-        }
-        else
-        {
-            _unitState = EStateType.StrongAttack;
-        }
+        _unitState = random < _unitData.FrequencyFastAttack ? EStateType.FastAttack : EStateType.StrongAttack;
     }
 }

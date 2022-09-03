@@ -12,8 +12,7 @@ namespace Ziggurat
 		private Animator _animator;
 		[SerializeField]
 		private Collider _collider;
-
-
+		
 		/// <summary>
 		/// Событие, вызываемое по окончанию анимации
 		/// </summary>

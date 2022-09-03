@@ -16,7 +16,6 @@ namespace Ziggurat
 
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log($"OnTrigger {_unitType}");
             if (!other.CompareTag("Unit")) return;
             var unit = other.gameObject.GetComponent<UnitBehaviour>();
             if (unit == null) return;
