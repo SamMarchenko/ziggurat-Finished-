@@ -10,9 +10,14 @@ namespace Ziggurat
 	public enum EStateType : byte
 	{
 		Move = 0,
+		Attack = 1,
+		Die = 2
+	}
+
+	public enum EAttackState
+	{
 		FastAttack = 1,
-		StrongAttack = 2,
-		Die = 3
+		SlowAttack = 2
 	}
 
 	[Flags]

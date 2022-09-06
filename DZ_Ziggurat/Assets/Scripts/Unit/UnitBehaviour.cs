@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 public class UnitBehaviour : MonoBehaviour
 {
     [SerializeField] private EStateType _unitState;
+    [SerializeField] private EAttackState _attackState;
     [SerializeField] private EUnitType _unitType;[SerializeField] private UnitBehaviour _target;
     [SerializeField] private GameObject _defaultTarget;
     [SerializeField, Space] private TargetFinder _targetFinder;
@@ -49,8 +50,7 @@ public class UnitBehaviour : MonoBehaviour
                 SetNearestTarget();
                 CheckTargetDistance();
                 break;
-            case EStateType.FastAttack:
-            case EStateType.StrongAttack:
+            case EStateType.Attack:
                 OnAttack(_target);
                 break;
             case EStateType.Die:
@@ -66,7 +66,7 @@ public class UnitBehaviour : MonoBehaviour
         var distance = Vector3.Distance(transform.position, _target.transform.position);
         if (distance <= 5f)
         {
-            RandomAttackState();
+            _unitState = EStateType.Attack;
         }
     }
 
@@ -113,26 +113,25 @@ public class UnitBehaviour : MonoBehaviour
     
     private void OnAttack(UnitBehaviour target)
     {
-        if (_unitState == EStateType.FastAttack)
+        RandomAttackState();
+        if (_attackState == EAttackState.FastAttack)
         {
-            target.ApplyDamage(_unitData.FastAttackDamage);
             _unitEnvironment.StartAnimation("Fast");
         }
         else
         {
-            target.ApplyDamage(_unitData.SlowAttackDamage);
             _unitEnvironment.StartAnimation("Strong");
         }
     }
     private void SetTargetDamage(UnitBehaviour unit)
     {
         if (unit != _target) return;
-        switch (_unitState)
+        switch (_attackState)
         {
-            case EStateType.FastAttack:
+            case EAttackState.FastAttack:
                 unit.ApplyDamage(_unitData.FastAttackDamage);
                 break;
-            case EStateType.StrongAttack:
+            case EAttackState.SlowAttack:
                 unit.ApplyDamage(_unitData.SlowAttackDamage);
                 break;
             default:
@@ -157,6 +156,6 @@ public class UnitBehaviour : MonoBehaviour
     private void RandomAttackState()
     {
         var random = Random.Range(0.0f, 1.0f);
-        _unitState = random < _unitData.FrequencyFastAttack ? EStateType.FastAttack : EStateType.StrongAttack;
+        _attackState = random < _unitData.FrequencyFastAttack ? EAttackState.FastAttack : EAttackState.SlowAttack;
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Ziggurat
@@ -6,6 +7,7 @@ namespace Ziggurat
     public class SwordContact : MonoBehaviour
     {
         private EUnitType _unitType;
+        private List<UnitBehaviour> _contacts = new List<UnitBehaviour>();
 
         public Action<UnitBehaviour> SwordTargetContact;
 
@@ -16,11 +18,18 @@ namespace Ziggurat
         private void OnTriggerEnter(Collider other)
         {
             var unit = other.gameObject.GetComponent<UnitBehaviour>();
-            if (unit == null) return;
+            if (unit == null || _contacts.Contains(unit)) return;
+            _contacts.Add(unit);
             if (unit.UnitType != _unitType)
             {
                 SwordTargetContact?.Invoke(unit);
             }
+        }
+        
+        public void ClearContacts()
+        {
+            Debug.Log("Clear contacts");
+            _contacts.Clear();
         }
     }
 }
