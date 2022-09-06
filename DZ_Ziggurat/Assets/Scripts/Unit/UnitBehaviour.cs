@@ -18,7 +18,7 @@ public class UnitBehaviour : MonoBehaviour
     private UnitEnvironment _unitEnvironment;
     private Rigidbody _rigidbody;
     private UnitData _unitData;
-    
+
     public EUnitType UnitType => _unitType;
     public UnitBehaviour Target => _target;
 
@@ -29,13 +29,19 @@ public class UnitBehaviour : MonoBehaviour
         _defaultTarget = defaultTarget;
         _rigidbody = GetComponent<Rigidbody>();
         _unitEnvironment = GetComponent<UnitEnvironment>();
+        _unitEnvironment.SwordColliderIsOff += SwordColliderIsOff;
         _unitState = EStateType.Move;
         _targetFinder.SetUnitType(unitData.UnitType);
         _sphere.enabled = true;
         _swordContact.SetUnitType(unitData.UnitType);
         _swordContact.SwordTargetContact += SetTargetDamage;
     }
-    
+
+    private void SwordColliderIsOff()
+    {
+        _swordContact.ClearContacts();
+    }
+
     private void Update()
     {
         CheckUnitState();
@@ -129,9 +135,11 @@ public class UnitBehaviour : MonoBehaviour
         switch (_attackState)
         {
             case EAttackState.FastAttack:
+                
                 unit.ApplyDamage(_unitData.FastAttackDamage);
                 break;
             case EAttackState.SlowAttack:
+                Debug.Log($"{unit.name} health = {_unitData.Health} - {_unitData.SlowAttackDamage} Strong");
                 unit.ApplyDamage(_unitData.SlowAttackDamage);
                 break;
             default:
@@ -150,12 +158,14 @@ public class UnitBehaviour : MonoBehaviour
             _unitState = EStateType.Die;
             //Dead?.Invoke(this);
         }
-
-        Debug.Log($"{_unitData.UnitType} health = {_unitData.Health}");
+        Debug.Log($"{gameObject.name} health = {_unitData.Health} - {_unitData.FastAttackDamage} Fast");
+//        Debug.Log($"{_unitData.UnitType} health = {_unitData.Health}");
     }
     private void RandomAttackState()
     {
         var random = Random.Range(0.0f, 1.0f);
-        _attackState = random < _unitData.FrequencyFastAttack ? EAttackState.FastAttack : EAttackState.SlowAttack;
+        
+        _attackState = random < _unitData.FrequencyFastAttack/100 ? EAttackState.FastAttack : EAttackState.SlowAttack;
+        Debug.Log($"{random} + {_attackState}");
     }
 }

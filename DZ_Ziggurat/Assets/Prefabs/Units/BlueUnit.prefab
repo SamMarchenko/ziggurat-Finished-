@@ -1567,6 +1567,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitState: 0
+  _attackState: 0
   _unitType: 0
   _target: {fileID: 0}
   _defaultTarget: {fileID: 0}

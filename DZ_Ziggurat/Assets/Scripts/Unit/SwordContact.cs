@@ -8,7 +8,7 @@ namespace Ziggurat
     {
         private EUnitType _unitType;
         private List<UnitBehaviour> _contacts = new List<UnitBehaviour>();
-
+        [SerializeField]
         public Action<UnitBehaviour> SwordTargetContact;
 
         public void SetUnitType(EUnitType unitType)
@@ -28,7 +28,7 @@ namespace Ziggurat
         
         public void ClearContacts()
         {
-            Debug.Log("Clear contacts");
+            //Debug.Log("Clear contacts");
             _contacts.Clear();
         }
     }
