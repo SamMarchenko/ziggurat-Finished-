@@ -14,6 +14,8 @@ namespace Ziggurat
 		private Collider _collider;
 
 		public Action SwordColliderIsOff;
+		public Action<string> AttackAnimationEnd;
+		public Action UnitDied;
 		
 		/// <summary>
 		/// Событие, вызываемое по окончанию анимации
@@ -57,8 +59,9 @@ namespace Ziggurat
 		private void AnimationEventEnd_UnityEditor(string result)
 		{
 			//В конце анимации смерти особый аргумент и своя логика обработки
-			if (result == "die") Destroy(gameObject);
+			if (result == "die") UnitDied?.Invoke();
 			OnEndAnimation?.Invoke(gameObject, null);
+			AttackAnimationEnd?.Invoke(result);
 		}
 	}
 }

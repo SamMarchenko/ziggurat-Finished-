@@ -15,8 +15,8 @@ MonoBehaviour:
   _unitType: 2
   _maxHealth: 14
   _moveSpeed: 17.04
-  _fastAttackDamage: 2
-  _slowAttackDamage: 3
+  _fastAttackDamage: 5
+  _slowAttackDamage: 10
   _chanceDoubleDamage: 38.3
   _chanceMissAttack: 31
   _frequencyFastAttack: 22.7

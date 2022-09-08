@@ -34672,7 +34672,7 @@ AnimationClip:
     messageOptions: 0
   - time: 0.6666667
     functionName: AnimationEventEnd_UnityEditor
-    data: 
+    data: End1
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

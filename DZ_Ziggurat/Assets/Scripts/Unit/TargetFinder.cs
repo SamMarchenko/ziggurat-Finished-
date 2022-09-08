@@ -30,6 +30,7 @@ namespace Ziggurat
             UnitBehaviour unit = null;
             if (_targets.Count < 1)
             {
+                _targets.Clear();
                 return unit;
             }
 
@@ -37,6 +38,10 @@ namespace Ziggurat
 
             foreach (var target in _targets)
             {
+                if (target == null)
+                {
+                    continue;
+                }
                 var distance = Vector3.Distance(transform.position, target.transform.position);
                 if (distance < nearest)
                 {
