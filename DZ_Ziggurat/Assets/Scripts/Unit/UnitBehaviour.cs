@@ -16,7 +16,8 @@ public class UnitBehaviour : MonoBehaviour
     [SerializeField, Space] private TargetFinder _targetFinder;
     [SerializeField] private SphereCollider _sphere;
     [SerializeField, Space] private SwordContact _swordContact;
-    private bool AttackAnimationEnd = true;
+    private bool attackAnimationEnd = true;
+    private float arrivalDistance = 1f;
 
     private UnitEnvironment _unitEnvironment;
     private Rigidbody _rigidbody;
@@ -45,14 +46,14 @@ public class UnitBehaviour : MonoBehaviour
 
     private void UnitDied()
     {
-        Destroy(gameObject, 2f);
+        Destroy(gameObject, 0.5f);
     }
 
     private void AttackAnimation(string result)
     {
         if (result == "End1" || result == "End2")
         {
-            AttackAnimationEnd = true;
+            attackAnimationEnd = true;
         }
     }
 
@@ -81,8 +82,15 @@ public class UnitBehaviour : MonoBehaviour
                     _unitState = EStateType.Move;
                     break;
                 }
-                if (!AttackAnimationEnd) break;
-                OnAttack(_target);
+
+                if (!attackAnimationEnd) break;
+                if (CanAttack())
+                {
+                    OnAttack(_target);
+                    break;
+                }
+
+                _unitState = EStateType.Move;
                 break;
             case EStateType.Die:
                 _unitEnvironment.StartAnimation("Die");
@@ -92,12 +100,19 @@ public class UnitBehaviour : MonoBehaviour
         }
     }
 
+    private bool CanAttack()
+    {
+        if (_target == null) return false;
+        var distance = Vector3.Distance(transform.position, _target.transform.position);
+        return distance <= 1.2f;
+    }
+
     private void CheckTargetDistance()
     {
         if (_target == null) return;
         var distance = Vector3.Distance(transform.position, _target.transform.position);
-        if (distance <= 5f)
-        {   
+        if (distance <= 1.1f)
+        {
             _unitState = EStateType.Attack;
         }
     }
@@ -154,6 +169,43 @@ public class UnitBehaviour : MonoBehaviour
         SetVelocity(velocity);
     }
 
+    public void OnArrival()
+    {
+        _unitEnvironment.Moving(1);
+
+        var targetPosition = _target == null ? _defaultTarget.transform.position : _target.transform.position;
+        transform.LookAt(targetPosition);
+        var desired_velocity = (targetPosition - transform.position).normalized * _unitData.MoveSpeed;
+        //var desired_velocity = targetPosition - transform.position;
+
+        var sqrLength = desired_velocity.sqrMagnitude;
+
+        if (sqrLength < arrivalDistance * arrivalDistance)
+        {
+            //desired_velocity /= arrivalDistance;
+
+            desired_velocity = CheckMinSpeed(desired_velocity);
+        }
+
+        var steering = desired_velocity - GetVelocity(EIgnoreAxisType.Y);
+
+        steering = Vector3.ClampMagnitude(steering, _unitData.MoveSpeed) / _unitData.Mass;
+        var velocity = Vector3.ClampMagnitude(GetVelocity() + steering, _unitData.MoveSpeed);
+
+        SetVelocity(velocity);
+    }
+
+    private Vector3 CheckMinSpeed(Vector3 velocity)
+    {
+        if (velocity.sqrMagnitude < 0.1f)
+        {
+            velocity.z = 0f;
+            velocity.x = 0f;
+        }
+
+        return velocity;
+    }
+
     private void OnAttack(UnitBehaviour target)
     {
         RandomAttackState();
@@ -161,11 +213,11 @@ public class UnitBehaviour : MonoBehaviour
         {
             case EAttackState.FastAttack:
                 _unitEnvironment.StartAnimation("Fast");
-                AttackAnimationEnd = false;
+                attackAnimationEnd = false;
                 break;
             case EAttackState.SlowAttack:
                 _unitEnvironment.StartAnimation("Strong");
-                AttackAnimationEnd = false;
+                attackAnimationEnd = false;
                 break;
         }
     }
@@ -210,6 +262,6 @@ public class UnitBehaviour : MonoBehaviour
         var random = Random.Range(0.0f, 1.0f);
 
         _attackState = random < _unitData.FrequencyFastAttack / 100 ? EAttackState.FastAttack : EAttackState.SlowAttack;
-        Debug.Log($"{random} + {_attackState}");
+        // Debug.Log($"{random} + {_attackState}");
     }
 }
