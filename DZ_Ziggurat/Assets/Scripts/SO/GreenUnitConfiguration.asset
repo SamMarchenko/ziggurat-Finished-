@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: GreenUnitConfiguration
   m_EditorClassIdentifier: 
   _unitType: 2
-  _maxHealth: 5
+  _maxHealth: 35
   _moveSpeed: 8.35
-  _fastAttackDamage: 5
-  _slowAttackDamage: 10
+  _fastAttackDamage: 2
+  _slowAttackDamage: 3
   _chanceDoubleDamage: 38.3
-  _chanceMissAttack: 31
+  _chanceMissAttack: 100
   _frequencyFastAttack: 22.7
   _mass: 50

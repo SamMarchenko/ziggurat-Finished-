@@ -17,7 +17,7 @@ public class UnitBehaviour : MonoBehaviour
     [SerializeField] private SphereCollider _sphere;
     [SerializeField, Space] private SwordContact _swordContact;
     private bool attackAnimationEnd = true;
-    private float arrivalDistance = 1f;
+    private int damageСoefficient = 1;
 
     private UnitEnvironment _unitEnvironment;
     private Rigidbody _rigidbody;
@@ -159,7 +159,7 @@ public class UnitBehaviour : MonoBehaviour
         _unitEnvironment.Moving(1);
 
         var targetPosition = _target == null ? _defaultTarget.transform.position : _target.transform.position;
-        transform.LookAt(targetPosition);
+        RotateOnTarget(targetPosition);
         var desired_velocity = (targetPosition - transform.position).normalized * _unitData.MoveSpeed;
         var steering = desired_velocity - GetVelocity(EIgnoreAxisType.Y);
 
@@ -169,41 +169,12 @@ public class UnitBehaviour : MonoBehaviour
         SetVelocity(velocity);
     }
 
-    public void OnArrival()
+    private void RotateOnTarget(Vector3 targetPosition)
     {
-        _unitEnvironment.Moving(1);
+        var direction = targetPosition - transform.position;
 
-        var targetPosition = _target == null ? _defaultTarget.transform.position : _target.transform.position;
-        transform.LookAt(targetPosition);
-        var desired_velocity = (targetPosition - transform.position).normalized * _unitData.MoveSpeed;
-        //var desired_velocity = targetPosition - transform.position;
-
-        var sqrLength = desired_velocity.sqrMagnitude;
-
-        if (sqrLength < arrivalDistance * arrivalDistance)
-        {
-            //desired_velocity /= arrivalDistance;
-
-            desired_velocity = CheckMinSpeed(desired_velocity);
-        }
-
-        var steering = desired_velocity - GetVelocity(EIgnoreAxisType.Y);
-
-        steering = Vector3.ClampMagnitude(steering, _unitData.MoveSpeed) / _unitData.Mass;
-        var velocity = Vector3.ClampMagnitude(GetVelocity() + steering, _unitData.MoveSpeed);
-
-        SetVelocity(velocity);
-    }
-
-    private Vector3 CheckMinSpeed(Vector3 velocity)
-    {
-        if (velocity.sqrMagnitude < 0.1f)
-        {
-            velocity.z = 0f;
-            velocity.x = 0f;
-        }
-
-        return velocity;
+        Quaternion rotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, 5 * Time.deltaTime);
     }
 
     private void OnAttack(UnitBehaviour target)
@@ -225,26 +196,39 @@ public class UnitBehaviour : MonoBehaviour
     private void SetTargetDamage(UnitBehaviour unit)
     {
         if (unit != _target) return;
+        if (RandomMissAttack())
+        {
+            Debug.Log($"{gameObject.name} не попал по {unit.name}");
+            return;
+        }
+
+        damageСoefficient = RandomDoubleDamage();
         switch (_attackState)
         {
             case EAttackState.FastAttack:
 
-                unit.ApplyDamage(_unitData.FastAttackDamage);
+                unit.ApplyDamage(_unitData.FastAttackDamage, damageСoefficient);
                 break;
             case EAttackState.SlowAttack:
-                Debug.Log($"{unit.name} health = {_unitData.Health} - {_unitData.SlowAttackDamage} Strong");
-                unit.ApplyDamage(_unitData.SlowAttackDamage);
+                unit.ApplyDamage(_unitData.SlowAttackDamage, damageСoefficient);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
     }
 
-    public void ApplyDamage(float damage)
+    private int RandomDoubleDamage()
     {
-        if (_unitData.Health - damage > 0)
+        var random = Random.Range(0.0f, 1.0f);
+        return random < _unitData.ChanceDoubleDamage / 100 ? 2 : 1;
+    }
+
+    public void ApplyDamage(float damage, int coefficient)
+    {
+        Debug.Log($"{gameObject.name} start health = {_unitData.Health}");
+        if (_unitData.Health - damage * coefficient > 0)
         {
-            _unitData.Health -= damage;
+            _unitData.Health -= damage * coefficient;
         }
         else
         {
@@ -253,7 +237,7 @@ public class UnitBehaviour : MonoBehaviour
             Die?.Invoke();
         }
 
-        Debug.Log($"{gameObject.name} health = {_unitData.Health} - {_unitData.FastAttackDamage} Fast");
+        Debug.Log($"{gameObject.name} health = {_unitData.Health} - {damage} Fast * coefficient {coefficient}");
 //      Debug.Log($"{_unitData.UnitType} health = {_unitData.Health}");
     }
 
@@ -263,5 +247,12 @@ public class UnitBehaviour : MonoBehaviour
 
         _attackState = random < _unitData.FrequencyFastAttack / 100 ? EAttackState.FastAttack : EAttackState.SlowAttack;
         // Debug.Log($"{random} + {_attackState}");
+    }
+
+    private bool RandomMissAttack()
+    {
+        var random = Random.Range(0.0f, 1.0f);
+
+        return random < _unitData.ChanceMissAttack / 100;
     }
 }
