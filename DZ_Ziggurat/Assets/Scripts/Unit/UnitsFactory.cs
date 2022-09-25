@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Ziggurat;
 
@@ -8,19 +9,33 @@ public class UnitsFactory : MonoBehaviour
 {
     [SerializeField] private UnitBehaviour[] _units;
     [SerializeField] private SpawnPositions[] _spawnPositions;
-    [SerializeField] private UnitConfiguration[] _unitsData;
+    public SpawnPositions[] SpawnPositions => _spawnPositions;
+    [SerializeField] private UnitConfiguration[] _unitConfigs;
+    private List<UnitConfiguration> _unitConfigurations = new List<UnitConfiguration>();
     [SerializeField] private GameObject _defaultTarget;
     
 
     public void CreateUnit()
     {
+        SetInitialData();
         foreach (var spawnPosition in _spawnPositions)
         {
             var unit = Instantiate(GetUnitForCreation(spawnPosition.UnitType),
                 spawnPosition.transform.position + new Vector3(0, 8, 0), Quaternion.identity);
-            var unitConfiguration = GetUnitConfig(unit.UnitType);
+            var unitConfiguration = GetUnitConfiguration(unit.UnitType);
             unit.Init(_defaultTarget, GetUnitData(unitConfiguration));
             unit.transform.LookAt(Vector3.zero);
+        }
+    }
+
+    private void SetInitialData()
+    {
+        if (_unitConfigurations.Count < 1)
+        {
+            foreach (var unitConfiguration in _unitConfigs)
+            {
+                _unitConfigurations.Add(unitConfiguration);
+            }
         }
     }
 
@@ -51,13 +66,13 @@ public class UnitsFactory : MonoBehaviour
         return null;
     }
 
-    private UnitConfiguration GetUnitConfig(EUnitType unitType)
+    private UnitConfiguration GetUnitConfiguration(EUnitType unitType)
     {
-        foreach (var unitData in _unitsData)
+        foreach (var unitConfiguration in _unitConfigurations)
         {
-            if (unitType == unitData.UnitType)
+            if (unitType == unitConfiguration.UnitType)
             {
-                return unitData;
+                return unitConfiguration;
             }
         }
         return null;

@@ -12,21 +12,29 @@ namespace Ziggurat
 
         private void Start()
         {
-            CreateUnits();
+            foreach (var SpawnPosition in _unitFactory.SpawnPositions)
+            {
+                SpawnPosition.OnGateClick += OnGateClick; 
+            }
         }
 
-        // private void Update()
-        // {
-        //     _createCoolDown -= Time.deltaTime;
-        //     CreateUnits();
-        // }
+        private void OnGateClick(EUnitType obj)
+        {
+           //todo: открытие окна параметров юнита
+        }
+
+        private void Update()
+        {
+            _createCoolDown -= Time.deltaTime;
+            CreateUnits();
+        }
 
         private void CreateUnits()
         {
             if (_createCoolDown >0)
                 return;
             _unitFactory.CreateUnit();
-            _createCoolDown = 3f;
+            _createCoolDown = 5f;
         }
     }
 }
