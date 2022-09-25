@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using Ziggurat;
@@ -27,8 +28,10 @@ public class GateSettingsView : MonoBehaviour
     [SerializeField] private Text _chanceMissAttackValue;
     [SerializeField] private Text _frequencyFastAttackValue;
     [SerializeField] private Text _unitMassValue;
-    
 
+    [SerializeField] private Button _updateDataButton;
+    public Button UpdateDataButton => _updateDataButton;
+    
     private void Start()
     {
         SetDefaultPlaceHolderText();
@@ -58,5 +61,5 @@ public class GateSettingsView : MonoBehaviour
         _frequencyFastAttackPlaceholderText.text = data.GetFrequencyFastAttack.ToString();
         _unitMassPlaceholderText.text = data.GetMass.ToString();
     }
-    
+   
 }

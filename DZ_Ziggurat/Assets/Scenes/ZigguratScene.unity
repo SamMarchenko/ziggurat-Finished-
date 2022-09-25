@@ -4250,6 +4250,7 @@ MonoBehaviour:
   _chanceMissAttackValue: {fileID: 1492181997}
   _frequencyFastAttackValue: {fileID: 1196696201}
   _unitMassValue: {fileID: 1316788863}
+  _updateDataButton: {fileID: 678565113}
 --- !u!114 &1001592566
 MonoBehaviour:
   m_ObjectHideFlags: 0

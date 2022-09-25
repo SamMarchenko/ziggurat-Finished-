@@ -11,6 +11,16 @@ namespace Ziggurat
         [SerializeField] private List<UnitBehaviour> _createdUnits;
         [SerializeField] private GateSettingsView _gateSettingsView;
 
+        private void Awake()
+        {
+            _gateSettingsView.UpdateDataButton.onClick.AddListener(()=>SetCurrentUnitDatas());
+        }
+
+        private void SetCurrentUnitDatas()
+        {
+            //todo: реализовать передачу параметров из вьюхи в конфиги юнитов. Сделать проверку в сеттерах на корректный и не пустой ввод
+        }
+
         private void Start()
         {
             foreach (var SpawnPosition in _unitFactory.SpawnPositions)
@@ -21,7 +31,7 @@ namespace Ziggurat
 
         private void OnGateClick(EUnitType obj)
         {
-           //todo: открытие окна параметров юнита
+           //todo: анимация открытия окна параметров юнита
            GetUnitDatasForSettingView(obj);
         }
 
@@ -43,6 +53,11 @@ namespace Ziggurat
                 return;
             _unitFactory.CreateUnit();
             _createCoolDown = 5f;
+        }
+        
+        public void Dispose()
+        {
+            _gateSettingsView.UpdateDataButton.onClick.RemoveAllListeners();
         }
     }
 }
