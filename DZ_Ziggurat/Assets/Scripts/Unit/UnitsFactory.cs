@@ -66,7 +66,7 @@ public class UnitsFactory : MonoBehaviour
         return null;
     }
 
-    private UnitConfiguration GetUnitConfiguration(EUnitType unitType)
+    public UnitConfiguration GetUnitConfiguration(EUnitType unitType)
     {
         foreach (var unitConfiguration in _unitConfigurations)
         {

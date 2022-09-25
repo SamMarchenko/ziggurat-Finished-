@@ -9,6 +9,7 @@ namespace Ziggurat
         [SerializeField] private UnitsFactory _unitFactory;
         [SerializeField] float _createCoolDown = 0f;
         [SerializeField] private List<UnitBehaviour> _createdUnits;
+        [SerializeField] private GateSettingsView _gateSettingsView;
 
         private void Start()
         {
@@ -21,6 +22,13 @@ namespace Ziggurat
         private void OnGateClick(EUnitType obj)
         {
            //todo: открытие окна параметров юнита
+           GetUnitDatasForSettingView(obj);
+        }
+
+        private void GetUnitDatasForSettingView(EUnitType unitType)
+        {
+            var unitConfiguration = _unitFactory.GetUnitConfiguration(unitType);
+            _gateSettingsView.GetCurrentUnitData(unitConfiguration);
         }
 
         private void Update()

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Ziggurat;
 
 public class GateSettingsView : MonoBehaviour
 {
@@ -43,6 +44,19 @@ public class GateSettingsView : MonoBehaviour
         _chanceMissAttackPlaceholderText.text = "Range (0, 100)";
         _frequencyFastAttackPlaceholderText.text = "Range (0, 100)";
         _unitMassPlaceholderText.text = "Range (50, 100)";
+    }
+
+    public void GetCurrentUnitData(UnitConfiguration data)
+    {
+        _unitTypeValue.text = data.UnitType.ToString();
+        _healthPlaceholderText.text = data.GetMaxHealth.ToString();
+        _moveSpeedPlaceholderText.text = data.GetMoveSpeed.ToString();
+        _fastAttackDamagePlaceholderText.text = data.GetFastAttackDamage.ToString();
+        _slowAttackDamagePlaceholderText.text = data.GetSlowAttackDamage.ToString();
+        _chanceDDPlaceholderText.text = data.GetChanceDoubleDamage.ToString();
+        _chanceMissAttackPlaceholderText.text = data.GetChanceMissAttack.ToString();
+        _frequencyFastAttackPlaceholderText.text = data.GetFrequencyFastAttack.ToString();
+        _unitMassPlaceholderText.text = data.GetMass.ToString();
     }
     
 }
