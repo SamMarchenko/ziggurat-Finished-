@@ -11,6 +11,5 @@ namespace Ziggurat
         public float ChanceMissAttack;
         public float FrequencyFastAttack;
         public float Mass;
-        
     }
 }

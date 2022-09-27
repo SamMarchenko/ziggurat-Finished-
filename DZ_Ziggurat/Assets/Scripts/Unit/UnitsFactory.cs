@@ -11,7 +11,7 @@ public class UnitsFactory : MonoBehaviour
     [SerializeField] private SpawnPositions[] _spawnPositions;
     public SpawnPositions[] SpawnPositions => _spawnPositions;
     [SerializeField] private UnitConfiguration[] _unitConfigs;
-    private List<UnitConfiguration> _unitConfigurations = new List<UnitConfiguration>();
+    private List<UnitConfiguration> _unitConfigurationsSO = new List<UnitConfiguration>();
     [SerializeField] private GameObject _defaultTarget;
     
 
@@ -30,11 +30,11 @@ public class UnitsFactory : MonoBehaviour
 
     private void SetInitialData()
     {
-        if (_unitConfigurations.Count < 1)
+        if (_unitConfigurationsSO.Count < 1)
         {
             foreach (var unitConfiguration in _unitConfigs)
             {
-                _unitConfigurations.Add(unitConfiguration);
+                _unitConfigurationsSO.Add(unitConfiguration);
             }
         }
     }
@@ -43,15 +43,15 @@ public class UnitsFactory : MonoBehaviour
     {
         UnitData unitData = new UnitData();
         
-        unitData.Health = config.GetMaxHealth;
+        unitData.Health = config.MaxHealth;
         unitData.UnitType = config.UnitType;
-        unitData.MoveSpeed = config.GetMoveSpeed;
-        unitData.FastAttackDamage = config.GetFastAttackDamage;
-        unitData.SlowAttackDamage = config.GetSlowAttackDamage;
-        unitData.ChanceDoubleDamage = config.GetChanceDoubleDamage;
-        unitData.ChanceMissAttack = config.GetChanceMissAttack;
-        unitData.FrequencyFastAttack = config.GetFrequencyFastAttack;
-        unitData.Mass = config.GetMass;
+        unitData.MoveSpeed = config.MoveSpeed;
+        unitData.FastAttackDamage = config.FastAttackDamage;
+        unitData.SlowAttackDamage = config.SlowAttackDamage;
+        unitData.ChanceDoubleDamage = config.ChanceDoubleDamage;
+        unitData.ChanceMissAttack = config.ChanceMissAttack;
+        unitData.FrequencyFastAttack = config.FrequencyFastAttack;
+        unitData.Mass = config.Mass;
         return unitData;
     }
 
@@ -68,7 +68,7 @@ public class UnitsFactory : MonoBehaviour
 
     public UnitConfiguration GetUnitConfiguration(EUnitType unitType)
     {
-        foreach (var unitConfiguration in _unitConfigurations)
+        foreach (var unitConfiguration in _unitConfigurationsSO)
         {
             if (unitType == unitConfiguration.UnitType)
             {
@@ -76,5 +76,24 @@ public class UnitsFactory : MonoBehaviour
             }
         }
         return null;
+    }
+
+    public void SetUpdatedConfiguration(UnitData unitData)
+    {
+        foreach (var unitConfiguration in _unitConfigs)
+        {
+            if (unitData.UnitType == unitConfiguration.UnitType)
+            {
+                unitConfiguration.MaxHealth = unitData.Health;
+                unitConfiguration.MoveSpeed = unitData.MoveSpeed;
+                unitConfiguration.FastAttackDamage = unitData.FastAttackDamage;
+                unitConfiguration.SlowAttackDamage = unitData.SlowAttackDamage;
+                unitConfiguration.ChanceDoubleDamage = unitData.ChanceDoubleDamage;
+                unitConfiguration.ChanceMissAttack = unitData.ChanceMissAttack;
+                unitConfiguration.FrequencyFastAttack = unitData.FrequencyFastAttack;
+                unitConfiguration.Mass = unitData.Mass;
+                Debug.Log($"Perezapisal");
+            }
+        }
     }
 }
