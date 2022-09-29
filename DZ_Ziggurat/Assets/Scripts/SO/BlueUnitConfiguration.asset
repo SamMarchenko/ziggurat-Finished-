@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: BlueUnitConfiguration
   m_EditorClassIdentifier: 
   _unitType: 0
-  _maxHealth: 10
-  _moveSpeed: 6.76
-  _fastAttackDamage: 4
-  _slowAttackDamage: 7
-  _chanceDoubleDamage: 35
-  _chanceMissAttack: 39.8
-  _frequencyFastAttack: 50
-  _mass: 50
+  _maxHealth: 15
+  _moveSpeed: 20
+  _fastAttackDamage: 1
+  _slowAttackDamage: 2
+  _chanceDoubleDamage: 50
+  _chanceMissAttack: 45.4
+  _frequencyFastAttack: 31.3
+  _mass: 58.8

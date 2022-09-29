@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: RedUnitConfiguration
   m_EditorClassIdentifier: 
   _unitType: 1
-  _maxHealth: 15
-  _moveSpeed: 10.24
+  _maxHealth: 10
+  _moveSpeed: 30
   _fastAttackDamage: 3
-  _slowAttackDamage: 7
-  _chanceDoubleDamage: 63.5
-  _chanceMissAttack: 70.5
-  _frequencyFastAttack: 68.7
+  _slowAttackDamage: 4
+  _chanceDoubleDamage: 100
+  _chanceMissAttack: 100
+  _frequencyFastAttack: 100
   _mass: 50

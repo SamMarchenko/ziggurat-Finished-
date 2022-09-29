@@ -198,7 +198,6 @@ public class UnitBehaviour : MonoBehaviour
         if (unit != _target) return;
         if (RandomMissAttack())
         {
-            Debug.Log($"{gameObject.name} не попал по {unit.name}");
             return;
         }
 
@@ -225,7 +224,7 @@ public class UnitBehaviour : MonoBehaviour
 
     public void ApplyDamage(float damage, int coefficient)
     {
-        Debug.Log($"{gameObject.name} start health = {_unitData.Health}");
+//        Debug.Log($"{gameObject.name} start health = {_unitData.Health}");
         if (_unitData.Health - damage * coefficient > 0)
         {
             _unitData.Health -= damage * coefficient;
@@ -237,7 +236,7 @@ public class UnitBehaviour : MonoBehaviour
             Die?.Invoke();
         }
 
-        Debug.Log($"{gameObject.name} health = {_unitData.Health} - {damage} Fast * coefficient {coefficient}");
+//        Debug.Log($"{gameObject.name} health = {_unitData.Health} - {damage} Fast * coefficient {coefficient}");
 //      Debug.Log($"{_unitData.UnitType} health = {_unitData.Health}");
     }
 

@@ -33,8 +33,10 @@ public class GateSettingsView : MonoBehaviour
     public Text UnitMassValue;
 
     [SerializeField] private Button _updateDataButton;
-    
+    [SerializeField] private Button _closeButton;
+
     public Button UpdateDataButton => _updateDataButton;
+    public Button CloseButton => _closeButton;
 
     private void Start()
     {
@@ -55,6 +57,7 @@ public class GateSettingsView : MonoBehaviour
 
     public void SetCurrentUnitData(UnitConfiguration config)
     {
+        ClearValues();
         _unitTypeValue.text = config.UnitType.ToString();
         _healthPlaceholderText.text = config.MaxHealth.ToString();
         _moveSpeedPlaceholderText.text = config.MoveSpeed.ToString();
@@ -66,8 +69,26 @@ public class GateSettingsView : MonoBehaviour
         _unitMassPlaceholderText.text = config.Mass.ToString();
     }
 
-    public void Subscribe(Action onUnitData)
+    public void SubscribeUpdateButton(Action onUnitData)
     {
         _updateDataButton.onClick.AddListener(() => onUnitData());
+    }
+    
+    public void SubscribeCloseButton(Action onCloseButton)
+    {
+        _closeButton.onClick.AddListener(() => onCloseButton());
+    }
+   
+
+    private void ClearValues()
+    {
+        MaxHealthValue.text = string.Empty;
+        MoveSpeedValue.text = string.Empty;
+        FastAttackValue.text = string.Empty;;
+        SlowAttackValue.text = string.Empty;;
+        ChanceDDValue.text = string.Empty;;
+        ChanceMissAttackValue.text = string.Empty;;
+        FrequencyFastAttackValue.text = string.Empty;;
+        UnitMassValue.text = string.Empty;;
     }
 }
