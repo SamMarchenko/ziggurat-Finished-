@@ -1157,7 +1157,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 458.4, y: -337.09}
+  m_AnchoredPosition: {x: 458.4, y: -417.15}
   m_SizeDelta: {x: 85.2936, y: 31.0485}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &292153974
@@ -1276,6 +1276,7 @@ MonoBehaviour:
   _createdUnits: []
   _gateSettingsView: {fileID: 1001592565}
   _uiAnimator: {fileID: 1001592569}
+  _gateWindowUI: {fileID: 1001592564}
 --- !u!4 &299897176
 Transform:
   m_ObjectHideFlags: 0
@@ -2632,7 +2633,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 75.672, y: -337.61}
+  m_AnchoredPosition: {x: 75.672, y: -417.67}
   m_SizeDelta: {x: 151.3437, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &678565113
@@ -4010,7 +4011,7 @@ MonoBehaviour:
   - {fileID: 1617742199}
   - {fileID: 1010354912}
   - {fileID: 2096191719}
-  _unitConfigs:
+  _unitConfigsSO:
   - {fileID: 11400000, guid: ad9e09b9bad5b453d9f525b13eca40b1, type: 2}
   - {fileID: 11400000, guid: 38396d0fd1d624e34b9279859b979cd8, type: 2}
   - {fileID: 11400000, guid: 149697481e27e4149ba00828d94f52dc, type: 2}
@@ -4423,10 +4424,10 @@ RectTransform:
   m_Father: {fileID: 783274938}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.28100002}
+  m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 253.73, y: 405.7756}
-  m_SizeDelta: {x: 507.4628, y: -51.551186}
+  m_AnchoredPosition: {x: 253.73, y: 250}
+  m_SizeDelta: {x: 507.46277, y: 442.22443}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1001592565
 MonoBehaviour:
@@ -4449,14 +4450,14 @@ MonoBehaviour:
   _frequencyFastAttackPlaceholderText: {fileID: 1507831993}
   _unitMassPlaceholderText: {fileID: 594414402}
   _unitTypeValue: {fileID: 963726839}
-  MaxHealthValue: {fileID: 316416597}
-  MoveSpeedValue: {fileID: 1089583206}
-  FastAttackValue: {fileID: 1253538931}
-  SlowAttackValue: {fileID: 771625368}
-  ChanceDDValue: {fileID: 968191568}
-  ChanceMissAttackValue: {fileID: 1492181997}
-  FrequencyFastAttackValue: {fileID: 1196696201}
-  UnitMassValue: {fileID: 1316788863}
+  MaxHealthInputField: {fileID: 1954882636}
+  MoveSpeedInputField: {fileID: 1535080126}
+  FastAttackInputField: {fileID: 735170772}
+  SlowAttackInputField: {fileID: 1504522352}
+  ChanceDDInputField: {fileID: 1883133201}
+  ChanceMissAttackInputField: {fileID: 1597314092}
+  FrequencyFastAttackInputField: {fileID: 1946460019}
+  UnitMassInputField: {fileID: 1798074079}
   _updateDataButton: {fileID: 678565113}
   _closeButton: {fileID: 292153974}
 --- !u!114 &1001592566

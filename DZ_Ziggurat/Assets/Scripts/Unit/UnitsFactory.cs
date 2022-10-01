@@ -10,14 +10,18 @@ public class UnitsFactory : MonoBehaviour
     [SerializeField] private UnitBehaviour[] _units;
     [SerializeField] private SpawnPositions[] _spawnPositions;
     public SpawnPositions[] SpawnPositions => _spawnPositions;
-    [SerializeField] private UnitConfiguration[] _unitConfigs;
-    private List<UnitConfiguration> _unitConfigurationsSO = new List<UnitConfiguration>();
+    [SerializeField] private UnitConfiguration[] _unitConfigsSO;
+    private List<UnitConfiguration> _unitConfigClones = new List<UnitConfiguration>();
     [SerializeField] private GameObject _defaultTarget;
-    
+
+
+    private void Start()
+    {
+        SetInitialData();
+    }
 
     public void CreateUnit()
     {
-        SetInitialData();
         foreach (var spawnPosition in _spawnPositions)
         {
             var unit = Instantiate(GetUnitForCreation(spawnPosition.UnitType),
@@ -30,15 +34,33 @@ public class UnitsFactory : MonoBehaviour
 
     private void SetInitialData()
     {
-        if (_unitConfigurationsSO.Count < 1)
+        if (_unitConfigClones.Count < 1)
         {
-            foreach (var unitConfiguration in _unitConfigs)
+            foreach (var unitConfiguration in _unitConfigsSO)
             {
-                _unitConfigurationsSO.Add(unitConfiguration);
+                
+                _unitConfigClones.Add(GetCloneConfig(unitConfiguration));
             }
         }
     }
 
+    private UnitConfiguration GetCloneConfig(UnitConfiguration config)
+    {
+        //todo: переписать возможно под дату
+        var clone = new UnitConfiguration();
+
+        clone.MaxHealth = config.MaxHealth;
+        clone.UnitType = config.UnitType;
+        clone.MoveSpeed = config.MoveSpeed;
+        clone.FastAttackDamage = config.FastAttackDamage;
+        clone.SlowAttackDamage = config.SlowAttackDamage;
+        clone.ChanceDoubleDamage = config.ChanceDoubleDamage;
+        clone.ChanceMissAttack = config.ChanceMissAttack;
+        clone.FrequencyFastAttack = config.FrequencyFastAttack;
+        clone.Mass = config.Mass;
+        
+        return clone;
+    }
     private UnitData GetUnitData(UnitConfiguration config)
     {
         UnitData unitData = new UnitData();
@@ -68,7 +90,7 @@ public class UnitsFactory : MonoBehaviour
 
     public UnitConfiguration GetUnitConfiguration(EUnitType unitType)
     {
-        foreach (var unitConfiguration in _unitConfigurationsSO)
+        foreach (var unitConfiguration in _unitConfigClones)
         {
             if (unitType == unitConfiguration.UnitType)
             {
@@ -80,7 +102,7 @@ public class UnitsFactory : MonoBehaviour
 
     public void SetUpdatedConfiguration(UnitData unitData)
     {
-        foreach (var unitConfiguration in _unitConfigs)
+        foreach (var unitConfiguration in _unitConfigClones)
         {
             if (unitData.UnitType == unitConfiguration.UnitType)
             {

@@ -22,15 +22,15 @@ public class GateSettingsView : MonoBehaviour
     /// Values
     /// </summary>
     [SerializeField] private Text _unitTypeValue;
-
-    public Text MaxHealthValue;
-    public Text MoveSpeedValue;
-    public Text FastAttackValue;
-    public Text SlowAttackValue;
-    public Text ChanceDDValue;
-    public Text ChanceMissAttackValue;
-    public Text FrequencyFastAttackValue;
-    public Text UnitMassValue;
+    
+    public InputField MaxHealthInputField;
+    public InputField MoveSpeedInputField;
+    public InputField FastAttackInputField;
+    public InputField SlowAttackInputField;
+    public InputField ChanceDDInputField;
+    public InputField ChanceMissAttackInputField;
+    public InputField FrequencyFastAttackInputField;
+    public InputField UnitMassInputField;
 
     [SerializeField] private Button _updateDataButton;
     [SerializeField] private Button _closeButton;
@@ -57,7 +57,6 @@ public class GateSettingsView : MonoBehaviour
 
     public void SetCurrentUnitData(UnitConfiguration config)
     {
-        ClearValues();
         _unitTypeValue.text = config.UnitType.ToString();
         _healthPlaceholderText.text = config.MaxHealth.ToString();
         _moveSpeedPlaceholderText.text = config.MoveSpeed.ToString();
@@ -77,18 +76,5 @@ public class GateSettingsView : MonoBehaviour
     public void SubscribeCloseButton(Action onCloseButton)
     {
         _closeButton.onClick.AddListener(() => onCloseButton());
-    }
-   
-
-    private void ClearValues()
-    {
-        MaxHealthValue.text = string.Empty;
-        MoveSpeedValue.text = string.Empty;
-        FastAttackValue.text = string.Empty;;
-        SlowAttackValue.text = string.Empty;;
-        ChanceDDValue.text = string.Empty;;
-        ChanceMissAttackValue.text = string.Empty;;
-        FrequencyFastAttackValue.text = string.Empty;;
-        UnitMassValue.text = string.Empty;;
     }
 }

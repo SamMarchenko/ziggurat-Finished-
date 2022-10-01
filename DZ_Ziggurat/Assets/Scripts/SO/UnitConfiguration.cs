@@ -5,7 +5,6 @@ using Ziggurat;
 public class UnitConfiguration : ScriptableObject
 {
     [SerializeField] private EUnitType _unitType;
-    public EUnitType UnitType => _unitType;
     [SerializeField] private float _maxHealth;
     [SerializeField, Range(5, 15)] private float _moveSpeed;
     [SerializeField] private float _fastAttackDamage;
@@ -15,6 +14,11 @@ public class UnitConfiguration : ScriptableObject
     [SerializeField, Range(0, 100)] private float _frequencyFastAttack;
     [SerializeField, Range(50, 100)] private float _mass;
 
+    public EUnitType UnitType
+    {
+        get => _unitType;
+        set => _unitType = value;
+    }
     public float MaxHealth
     {
         get => _maxHealth;
