@@ -117,18 +117,18 @@ namespace Ziggurat
             InteractableUI(_onAnimation);
         }
 
-        private void InteractableUI(bool state)
+        private void InteractableUI(bool isInteractable)
         {
-            _gateSettingsView.UpdateDataButton.interactable = !state;
-            _gateSettingsView.CloseButton.interactable = !state;
-            _gateSettingsView.MaxHealthInputField.interactable = !state;
-            _gateSettingsView.MoveSpeedInputField.interactable = !state;
-            _gateSettingsView.FastAttackInputField.interactable = !state;
-            _gateSettingsView.SlowAttackInputField.interactable = !state;
-            _gateSettingsView.ChanceDDInputField.interactable = !state;
-            _gateSettingsView.ChanceMissAttackInputField.interactable = !state;
-            _gateSettingsView.FrequencyFastAttackInputField.interactable = !state;
-            _gateSettingsView.UnitMassInputField.interactable = !state;
+            _gateSettingsView.UpdateDataButton.interactable = !isInteractable;
+            _gateSettingsView.CloseButton.interactable = !isInteractable;
+            _gateSettingsView.MaxHealthInputField.interactable = !isInteractable;
+            _gateSettingsView.MoveSpeedInputField.interactable = !isInteractable;
+            _gateSettingsView.FastAttackInputField.interactable = !isInteractable;
+            _gateSettingsView.SlowAttackInputField.interactable = !isInteractable;
+            _gateSettingsView.ChanceDDInputField.interactable = !isInteractable;
+            _gateSettingsView.ChanceMissAttackInputField.interactable = !isInteractable;
+            _gateSettingsView.FrequencyFastAttackInputField.interactable = !isInteractable;
+            _gateSettingsView.UnitMassInputField.interactable = !isInteractable;
         }
         
         private void ClearValues()

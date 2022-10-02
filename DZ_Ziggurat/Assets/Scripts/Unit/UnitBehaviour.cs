@@ -224,7 +224,6 @@ public class UnitBehaviour : MonoBehaviour
 
     public void ApplyDamage(float damage, int coefficient)
     {
-//        Debug.Log($"{gameObject.name} start health = {_unitData.Health}");
         if (_unitData.Health - damage * coefficient > 0)
         {
             _unitData.Health -= damage * coefficient;
@@ -235,9 +234,6 @@ public class UnitBehaviour : MonoBehaviour
             _unitState = EStateType.Die;
             Die?.Invoke();
         }
-
-//        Debug.Log($"{gameObject.name} health = {_unitData.Health} - {damage} Fast * coefficient {coefficient}");
-//      Debug.Log($"{_unitData.UnitType} health = {_unitData.Health}");
     }
 
     private void RandomAttackState()
@@ -245,7 +241,6 @@ public class UnitBehaviour : MonoBehaviour
         var random = Random.Range(0.0f, 1.0f);
 
         _attackState = random < _unitData.FrequencyFastAttack / 100 ? EAttackState.FastAttack : EAttackState.SlowAttack;
-        // Debug.Log($"{random} + {_attackState}");
     }
 
     private bool RandomMissAttack()

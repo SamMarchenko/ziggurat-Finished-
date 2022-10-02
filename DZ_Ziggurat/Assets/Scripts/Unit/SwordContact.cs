@@ -28,7 +28,6 @@ namespace Ziggurat
         
         public void ClearContacts()
         {
-            //Debug.Log("Clear contacts");
             _contacts.Clear();
         }
     }
